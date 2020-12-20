@@ -2,8 +2,10 @@ from aiogram import Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.types import Message
 
+from tgbot.services.repository import Repo
 
-async def admin_start(m: Message, state: FSMContext):
+
+async def admin_start(m: Message, state: FSMContext, repo: Repo):
     pass
 
 
