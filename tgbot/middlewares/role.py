@@ -1,6 +1,6 @@
 from aiogram.dispatcher.middlewares import LifetimeControllerMiddleware
 
-from tgbot.services.repository import Repo
+from tgbot.models.role import UserRole
 
 
 class RoleMiddleware(LifetimeControllerMiddleware):
@@ -9,7 +9,12 @@ class RoleMiddleware(LifetimeControllerMiddleware):
         self.admin_id = admin_id
 
     async def pre_process(self, obj, data, *args):
-        data["is_admin"] = obj.from_user.id == self.admin_id
+        if not hasattr(obj, "from_user"):
+            data["role"] = None
+        elif obj.from_user.id == self.admin_id:
+            data["role"] = UserRole.ADMIN
+        else:
+            data["role"] = UserRole.USER
 
     async def post_process(self, obj, data, *args):
-        del data["is_admin"]
+        del data["role"]

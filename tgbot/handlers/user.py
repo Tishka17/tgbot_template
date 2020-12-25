@@ -4,7 +4,7 @@ from aiogram.types import Message
 
 
 async def user_start(m: Message, state: FSMContext):
-    pass
+    await m.reply("Hello, user!")
 
 
 def register_user(dp: Dispatcher):
