@@ -6,7 +6,7 @@ from tgbot.models.role import UserRole
 from tgbot.services.repository import Repo
 
 
-async def admin_start(m: Message, state: FSMContext, repo: Repo):
+async def admin_start(m: Message):
     await m.reply("Hello, admin!")
 
 
