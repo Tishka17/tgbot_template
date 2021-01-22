@@ -50,7 +50,10 @@ async def main():
     register_user(dp)
 
     # start
-    await dp.start_polling()
+    try:
+        await dp.start_polling()
+    finally:
+        await bot.close()
 
 
 if __name__ == '__main__':
