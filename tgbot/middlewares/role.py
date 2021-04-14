@@ -4,6 +4,8 @@ from tgbot.models.role import UserRole
 
 
 class RoleMiddleware(LifetimeControllerMiddleware):
+    skip_patterns = ["error", "update"]
+
     def __init__(self, admin_id: int):
         super().__init__()
         self.admin_id = admin_id
