@@ -1,10 +1,10 @@
 [tg_bot]
-token =
-admin_id =
-use_redis = true
+token =1212:asdasdasd
+admin_id =2133123123
+use_redis = False
 
 [db]
-user = postgres
+user = user
 password = postgres
 database = postgres
 host = 127.0.0.1
