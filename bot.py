@@ -14,9 +14,12 @@ from tgbot.middlewares.role import RoleMiddleware
 
 logger = logging.getLogger(__name__)
 
+import aiomysql
 
-def create_pool(user, password, database, host, echo):
-    raise NotImplementedError  # TODO check your db connector
+async def create_pool(user, password, database, host, echo,loop):
+    db = await aiomysql.create_pool(user=user, password=password, db=database, host=host, port=3306, use_unicode=True, charset='utf8', loop=loop)
+    return db
+    #raise NotImplementedError  # TODO check your db connector
 
 
 async def main():
@@ -31,17 +34,20 @@ async def main():
         storage = RedisStorage()
     else:
         storage = MemoryStorage()
+    '''
+    loop = asyncio.get_event_loop()
     pool = await create_pool(
         user=config.db.user,
         password=config.db.password,
         database=config.db.database,
         host=config.db.host,
         echo=False,
+        loop=loop,
     )
-
+    '''
     bot = Bot(token=config.tg_bot.token)
     dp = Dispatcher(bot, storage=storage)
-    dp.middleware.setup(DbMiddleware(pool))
+    #dp.middleware.setup(DbMiddleware(pool))
     dp.middleware.setup(RoleMiddleware(config.tg_bot.admin_id))
     dp.filters_factory.bind(RoleFilter)
     dp.filters_factory.bind(AdminFilter)
