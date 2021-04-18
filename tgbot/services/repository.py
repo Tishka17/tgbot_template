@@ -1,5 +1,5 @@
 from typing import List
-
+from tgbot.models.temp_test import TestUser
 
 class Repo:
     """Db abstraction layer"""
@@ -8,19 +8,24 @@ class Repo:
         self.conn = conn
 
     # users
-    async def add_user(self, user_id) -> None:
+    async def add_user(self, data) -> None:
         """Store user in DB, ignore duplicates"""
-        # await self.conn.execute(
-        #     "INSERT INTO tg_users(userid) VALUES $1 ON CONFLICT DO NOTHING",
-        #     user_id,
-        # )
+        async with self.conn.cursor() as cur:
+            await cur.execute(f'INSERT INTO tel_user (name, status, telegram_id) VALUES("{data["name"]}","{data["status"]}","{data["telegram_id"]}")')
+            await self.conn.commit()
         return
 
-    async def list_users(self) -> List[int]:
-        """List all bot users"""
-        return [
-            # row[0]
-            # async for row in self.conn.execute(
-            #     "select userid from tg_users",
-            # )
-        ]
+
+    async def del_user(self, db_user_id) -> None:
+        """Store user in DB, ignore duplicates"""
+        async with self.conn.cursor() as cur:
+            await cur.execute(f' DELETE FROM tel_user WHERE id = "{db_user_id}" ')
+            await self.conn.commit()
+        return
+
+
+    async def list_users(self) -> List[TestUser]:
+        sql = TestUser.__select__
+        async with self.conn.cursor() as cur:
+            await cur.execute(sql)
+            return await cur.fetchall()
