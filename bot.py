@@ -34,7 +34,7 @@ async def main():
         storage = RedisStorage()
     else:
         storage = MemoryStorage()
-    '''
+
     loop = asyncio.get_event_loop()
     pool = await create_pool(
         user=config.db.user,
@@ -44,10 +44,10 @@ async def main():
         echo=False,
         loop=loop,
     )
-    '''
+
     bot = Bot(token=config.tg_bot.token)
     dp = Dispatcher(bot, storage=storage)
-    #dp.middleware.setup(DbMiddleware(pool))
+    dp.middleware.setup(DbMiddleware(pool))
     dp.middleware.setup(RoleMiddleware(config.tg_bot.admin_id))
     dp.filters_factory.bind(RoleFilter)
     dp.filters_factory.bind(AdminFilter)

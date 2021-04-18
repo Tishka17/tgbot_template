@@ -11,12 +11,11 @@ class DbMiddleware(LifetimeControllerMiddleware):
         self.pool = pool
 
     async def pre_process(self, obj, data, *args):
-        db = await self.pool.acquire()
-        data["db"] = db
-        data["repo"] = Repo(db)
+        data["db"] = await self.pool.acquire()
+        data["repo"] = Repo(data["db"])
 
     async def post_process(self, obj, data, *args):
-        del data["repo"]
-        db = data.get("db")
-        if db:
-            await db.close()
+        if (data['repo']):
+            data['repo'] = None
+        if (data['db']):
+            await self.pool.release(data['db'])

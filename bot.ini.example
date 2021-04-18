@@ -1,10 +1,10 @@
 [tg_bot]
 token =1212:asdasdasd
-admin_id =2133123123
+admin_id =111111111
 use_redis = False
 
 [db]
 user = user
-password = postgres
-database = postgres
+password = pass
+database = database
 host = 127.0.0.1
