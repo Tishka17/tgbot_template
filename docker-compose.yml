@@ -1,0 +1,14 @@
+version: '3.1'
+
+services:
+  your_bot_service_name:
+    image: your_bot_image_name
+    container_name: your_bot_container_name
+    build:
+      context: .
+    volumes:
+    - .:/usr/src/app/bot_name
+    command: python bot.py
+    restart: always
+    env_file:
+      - ".env"
