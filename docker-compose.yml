@@ -1,14 +1,15 @@
-version: '3.1'
+version: '3.3'
 
 services:
-  your_bot_service_name:
-    image: your_bot_image_name
-    container_name: your_bot_container_name
+  bot:
+    image: "${BOT_IMAGE_NAME}"
+    container_name: "${BOT_CONTAINER_NAME}"
     build:
       context: .
+    working_dir: "/usr/src/app/${BOT_NAME}"
     volumes:
-    - .:/usr/src/app/bot_name
-    command: python bot.py
+    - .:/usr/src/app/${BOT_NAME}
+    command: python3 -m bot
     restart: always
     env_file:
-      - ".env"
+      - ".env.dist"

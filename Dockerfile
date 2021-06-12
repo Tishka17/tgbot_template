@@ -1,9 +1,10 @@
 FROM python:3.9-slim
+ENV BOT_NAME=$BOT_NAME
 
-WORKDIR /usr/src/app/bot_name
+WORKDIR /usr/src/app/"${BOT_NAME}"
 
-COPY requirements.txt /usr/src/app/bot_name
-RUN pip install -r /usr/src/app/bot_name/requirements.txt
-COPY . /usr/src/app/bot_name
+COPY requirements.txt /usr/src/app/"${BOT_NAME}"
+RUN pip install -r /usr/src/app/"${BOT_NAME}"/requirements.txt
+COPY . /usr/src/app/"${BOT_NAME}"
 
-CMD python3 /usr/src/app/bot_name/bot.py
+CMD python3 -m bot

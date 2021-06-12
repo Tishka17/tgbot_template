@@ -1,2 +1,2 @@
-aiogram>=2.12,<3.0
+aiogram~=2.13
 aioredis
