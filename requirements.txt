@@ -1,2 +1,3 @@
-aiogram~=2.13
+aiogram~=2.12.1
 aioredis
+environs~=8.0.0
