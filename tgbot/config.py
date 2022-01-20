@@ -22,13 +22,6 @@ class Config:
     tg_bot: TgBot
     db: DbConfig
 
-
-def cast_bool(value: str) -> bool:
-    if not value:
-        return False
-    return value.lower() in ("true", "t", "1", "yes")
-
-
 def load_config(path: str):
     config = configparser.ConfigParser()
     config.read(path)
@@ -37,9 +30,9 @@ def load_config(path: str):
 
     return Config(
         tg_bot=TgBot(
-            token=tg_bot["token"],
-            admin_id=int(tg_bot["admin_id"]),
-            use_redis=cast_bool(tg_bot.get("use_redis")),
+            token=tg_bot.get("token"),
+            admin_id=tg_bot.getint("admin_id"),
+            use_redis=tg_bot.getboolean("use_redis"),
         ),
         db=DbConfig(**config["db"]),
     )
