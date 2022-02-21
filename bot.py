@@ -18,6 +18,15 @@ logger = logging.getLogger(__name__)
 def create_pool(user, password, database, host, echo):
     raise NotImplementedError  # TODO check your db connector
 
+async def start_polling(dp, skip_updates=False):
+    if skip_updates:
+        await dp.skip_updates()
+    await dp.start_polling()
+
+async def close_all(dp):
+    await dp.storage.close()
+    await dp.storage.wait_closed()
+    await dp.bot.session.close()
 
 async def main():
     logging.basicConfig(
@@ -51,11 +60,9 @@ async def main():
 
     # start
     try:
-        await dp.start_polling()
+        await start_polling(dp, skip_updates=True)
     finally:
-        await dp.storage.close()
-        await dp.storage.wait_closed()
-        await bot.session.close()
+        await close_all(dp)
 
 
 if __name__ == '__main__':
