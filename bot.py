@@ -33,13 +33,14 @@ async def main():
         level=logging.INFO,
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
     )
-    logger.error("Starting bot")
+    logger.info("Starting bot")
     config = load_config("bot.ini")
 
     if config.tg_bot.use_redis:
         storage = RedisStorage()
     else:
         storage = MemoryStorage()
+    
     pool = await create_pool(
         user=config.db.user,
         password=config.db.password,
@@ -69,4 +70,4 @@ if __name__ == '__main__':
     try:
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
-        logger.error("Bot stopped!")
+        logger.info("Bot stopped!")
