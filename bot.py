@@ -18,19 +18,29 @@ logger = logging.getLogger(__name__)
 def create_pool(user, password, database, host, echo):
     raise NotImplementedError  # TODO check your db connector
 
+async def start_polling(dp, skip_updates=False):
+    if skip_updates:
+        await dp.skip_updates()
+    await dp.start_polling()
+
+async def close_all(dp):
+    await dp.storage.close()
+    await dp.storage.wait_closed()
+    await dp.bot.session.close()
 
 async def main():
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
     )
-    logger.error("Starting bot")
+    logger.info("Starting bot")
     config = load_config("bot.ini")
 
     if config.tg_bot.use_redis:
         storage = RedisStorage()
     else:
         storage = MemoryStorage()
+    
     pool = await create_pool(
         user=config.db.user,
         password=config.db.password,
@@ -51,15 +61,13 @@ async def main():
 
     # start
     try:
-        await dp.start_polling()
+        await start_polling(dp, skip_updates=True)
     finally:
-        await dp.storage.close()
-        await dp.storage.wait_closed()
-        await bot.session.close()
+        await close_all(dp)
 
 
 if __name__ == '__main__':
     try:
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
-        logger.error("Bot stopped!")
+        logger.info("Bot stopped!")
