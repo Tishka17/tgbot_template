@@ -59,6 +59,7 @@ async def main():
 
 
 def cli():
+    """Wrapper for command line"""
     try:
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
