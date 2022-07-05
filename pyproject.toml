@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[project]
+name = "tgbot"
+version = "0.0.1"
+authors = [
+    { name = "Authorname", email = "email@domain.whatever" },
+]
+description = "Telegram bot example package"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "aiogram~=2.21",
+    "redis==4.3.*"
+]
+[project.optional-dependencies]
+test = [
+    "pytest"
+]
+lint = [
+    "flake8"
+]
+
+
+[project.urls]
+"Homepage" = "https://github.com/tishka17/tgbot_template"
+"Bug Tracker" = "https://github.com/tishka17/tgbot_template/issues"
+
+[project.scripts]
+tgbot = "tgbot.cli:cli"
