@@ -7,7 +7,7 @@ User=tgbot
 Group=tgbot
 Type=simple
 WorkingDirectory=/opt/tgbot
-ExecStart=/opt/tgbot/venv/bin/python bot.py
+ExecStart=/opt/tgbot/venv/bin/tgbot
 Restart=always
 
 [Install]
