@@ -19,4 +19,6 @@ class DbMiddleware(LifetimeControllerMiddleware):
         del data["repo"]
         db = data.get("db")
         if db:
-            await db.close()
+            # check the documentation of your pool implementation
+            # for proper way of releasing connection
+            await self.pool.release(db)
