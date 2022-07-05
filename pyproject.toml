@@ -19,8 +19,17 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "aiogram==2.*",
+    "aiogram~=2.21",
+    "redis==4.3.*"
 ]
+[project.optional-dependencies]
+test = [
+    "pytest"
+]
+lint = [
+    "flake8"
+]
+
 
 [project.urls]
 "Homepage" = "https://github.com/tishka17/tgbot_template"
