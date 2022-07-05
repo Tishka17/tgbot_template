@@ -10,7 +10,10 @@ from tgbot.models.role import UserRole
 class RoleFilter(BoundFilter):
     key = 'role'
 
-    def __init__(self, role: typing.Union[None, UserRole, typing.Collection[UserRole]] = None):
+    def __init__(
+        self,
+        role: typing.Union[None, UserRole, typing.Collection[UserRole]] = None,
+    ):
         if role is None:
             self.roles = None
         elif isinstance(role, UserRole):
